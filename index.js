@@ -1,8 +1,24 @@
 const express = require ('express');
 const app = express();
-const port = process.env.PORT || 8000
+const morgan = require('morgan');
+const port = process.env.PORT || 8000;
 
-const things = require('./things.js');
+// const things = require('./things.js');
+
+app.use(morgan('common'))
+
+app.get('/blog/:title/:id', (req, res, next) => {
+    res.send(`id: ${req.params.id} and title: ${req.params.title} `)
+    console.log('API diakses pada ', Date.now());
+    next()
+})
+
+// app.get('/blog/:title/:id', (err, req, res, next) => {
+//     res.send(`id: ${req.params.id} and title: ${req.params.title} `)
+//     console.log('API diakses pada ', Date.now());
+//     next()
+// })
+
 
 // app.get('/', (req, res) => {
 //     res.send({
@@ -19,7 +35,7 @@ const things = require('./things.js');
 //     res.send("You just called the post method at '/hello'!\n")
 // })
 
-app.use('/things', things)
+// app.use('/things', things)
 
 app.listen(port, () => {
     console.log(`Running away on ${port}`);
